@@ -8,9 +8,17 @@ class InteresController extends Controller
 {
     public function calcularInteres($capitalInicial, $tasaInteres, $plazo)
     {
-    $capitalFinal = $capitalInicial * pow(1 + $tasaInteres, $plazo);
-    return view('interes-compuesto', compact('capitalInicial', 'tasaInteres', 'plazo', 'capitalFinal'));
-    }
+        $data = [];
+        $capitalFinal = $capitalInicial;
 
-    
+        for ($i = 1; $i <= $plazo; $i++) {
+            $capitalFinal *= (1 + $tasaInteres);
+            $data[] = [
+                'anyo' => $i, 'capital' => $capitalFinal
+            ];
+        }
+
+        return view('interes-compuesto', compact('capitalInicial', 'tasaInteres', 'plazo', 'data'));
+    }
 }
+
